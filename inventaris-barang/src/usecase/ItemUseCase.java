@@ -17,7 +17,11 @@ public class ItemUseCase {
         return itemRepository.findAll();
     }
 
-    public Item addItem(String name, String quantity, String category) {
+    public Item addItem(String name, int quantity, String category) {
+        if (quantity <= 0) {
+            return null;
+        }
+
         return itemRepository.save(name, quantity, category);
     }
 
@@ -25,7 +29,11 @@ public class ItemUseCase {
         return itemRepository.deleteById(id);
     }
 
-    public boolean updateItem(int id, String name, String quantity, String category) {
+    public boolean updateItem(int id, String name, Integer quantity, String category) {
+        if (quantity != null && quantity <= 0) {
+            return false;
+        }
+
         Optional<Item> found = itemRepository.findById(id);
         if (found.isEmpty()) {
             return false;

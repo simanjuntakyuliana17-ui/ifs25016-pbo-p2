@@ -9,30 +9,29 @@ public class ActivityPresenter {
         return String.format("%d | %s | %s | %s", activity.getId(), activity.getTitle(), activity.getDay(), activity.getTime());
     }
 
-
-    private void printList(List<Activity> activitys, String header, String emptyMessage) {
+    private void printList(List<Activity> activities, String header, String emptyMessage) {
         System.out.println(header);
 
-        if (activitys.isEmpty()) {
+        if (activities.isEmpty()) {
             System.out.println(emptyMessage);
             return;
         }
 
-        for (Activity activity : activitys) {
+        for (Activity activity : activities) {
             System.out.println(format(activity));
         }
     }
 
-    public void showActivitys(List<Activity> activitys) {
-        printList(activitys, "Daftar Kegiatan:", "- Data kegiatan belum tersedia!");
+    public void showActivities(List<Activity> activities) {
+        printList(activities, "Daftar Kegiatan:", "- Data kegiatan belum tersedia!");
     }
 
-    public void showSearchResults(List<Activity> activitys, String keyword) {
-        printList(activitys, "Hasil Pencarian: \"" + keyword + "\"", "- Kegiatan tidak ditemukan!");
+    public void showSearchResults(List<Activity> activities, String keyword) {
+        printList(activities, "Hasil Pencarian: \"" + keyword + "\"", "- Kegiatan tidak ditemukan!");
     }
 
-    public void showSortedActivitys(List<Activity> activitys) {
-        printList(activitys, "Daftar Kegiatan (Terurut):", "- Data kegiatan belum tersedia!");
+    public void showSortedActivities(List<Activity> activities) {
+        printList(activities, "Daftar Kegiatan (Terurut):", "- Data kegiatan belum tersedia!");
     }
 
     public void showAddSuccess(Activity activity) {
@@ -65,9 +64,5 @@ public class ActivityPresenter {
 
     public void showInvalidSortOption() {
         System.out.println("[!] Pilihan tidak valid!");
-    }
-
-    public void showInvalidFinishedStatus() {
-        System.out.println("[!] Pilihan status selesai tidak valid (gunakan y/n)!");
     }
 }

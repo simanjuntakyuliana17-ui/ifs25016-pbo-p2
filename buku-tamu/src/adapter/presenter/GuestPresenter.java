@@ -31,10 +31,6 @@ public class GuestPresenter {
         printList(guests, "Hasil Pencarian: \"" + keyword + "\"", "- Tamu tidak ditemukan!");
     }
 
-    public void showSortedGuests(List<Guest> guests) {
-        printList(guests, "Daftar Tamu (Terurut):", "- Data tamu belum tersedia!");
-    }
-
     public void showAddSuccess(Guest guest) {
         System.out.printf("Berhasil mendaftarkan tamu: %s%n", format(guest));
     }
@@ -47,27 +43,11 @@ public class GuestPresenter {
         System.out.printf("[!] Gagal menghapus tamu dengan ID: %d.%n", id);
     }
 
-    public void showUpdateSuccess() {
-        System.out.println("Berhasil mengubah tamu.");
-    }
-
-    public void showUpdateFailed(int id) {
-        System.out.printf("[!] Gagal mengubah tamu dengan ID: %d.%n", id);
-    }
-
     public void showInvalidChoice() {
         System.out.println("[!] Pilihan tidak dimengerti.");
     }
 
     public void showInvalidId() {
         System.out.println("[!] ID tidak valid!");
-    }
-
-    public void showInvalidSortOption() {
-        System.out.println("[!] Pilihan tidak valid!");
-    }
-
-    public void showInvalidFinishedStatus() {
-        System.out.println("[!] Pilihan status selesai tidak valid (gunakan y/n)!");
     }
 }

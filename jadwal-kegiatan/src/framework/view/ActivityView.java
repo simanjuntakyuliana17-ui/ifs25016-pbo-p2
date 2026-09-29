@@ -19,10 +19,14 @@ public class ActivityView {
         boolean running = true;
         while (running) {
             // Tampilkan daftar activity terkini sebelum menu
-            presenter.showActivitys(activityUseCase.getAllActivitys());
+            presenter.showActivities(activityUseCase.getAllActivities());
             printMenu();
 
             String input = InputUtil.input("Pilih");
+            if (input.isBlank()) {
+                break;
+            }
+
             switch (input) {
                 case "1" -> addActivity();
                 case "2" -> updateActivity();
@@ -76,7 +80,7 @@ public class ActivityView {
         System.out.println("[Menghapus Kegiatan]");
         String strIdActivity = InputUtil.input("[ID Kegiatan] yang dihapus (x Jika Batal)");
 
-        if (strIdActivity.equals("x")) {
+        if (strIdActivity.isBlank() || strIdActivity.equals("x")) {
             return;
         }
 
@@ -97,7 +101,7 @@ public class ActivityView {
         System.out.println("[Mengubah Kegiatan]");
         String strIdActivity = InputUtil.input("ID Kegiatan yang diubah (x Jika Batal)");
 
-        if (strIdActivity.equals("x")) {
+        if (strIdActivity.isBlank() || strIdActivity.equals("x")) {
             return;
         }
 
@@ -127,8 +131,8 @@ public class ActivityView {
         System.out.println("[Mencari Kegiatan]");
         String keyword = InputUtil.input("Kata Kunci (x Jika Batal)");
 
-        if (!keyword.equals("x")) {
-            presenter.showSearchResults(activityUseCase.searchActivitys(keyword), keyword);
+        if (!keyword.isBlank() && !keyword.equals("x")) {
+            presenter.showSearchResults(activityUseCase.searchActivities(keyword), keyword);
         }
     }
 
@@ -154,7 +158,7 @@ public class ActivityView {
             return;
         }
 
-        presenter.showSortedActivitys(activityUseCase.sortActivitys(option));
+        presenter.showSortedActivities(activityUseCase.sortActivities(option));
     }
 
     /**

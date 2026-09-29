@@ -23,6 +23,10 @@ public class FinanceView {
             printMenu();
 
             String input = InputUtil.input("Pilih");
+            if (input.isBlank()) {
+                break;
+            }
+
             switch (input) {
                 case "1" -> addTransaction(TransactionType.INCOME);
                 case "2" -> addTransaction(TransactionType.EXPENSE);
@@ -55,7 +59,7 @@ public class FinanceView {
         String title = type == TransactionType.INCOME ? "[Tambah Pemasukan]" : "[Tambah Pengeluaran]";
         System.out.println(title);
         String description = InputUtil.input("Keterangan (x Jika Batal)");
-        if ("x".equalsIgnoreCase(description)) {
+        if (description.isBlank() || "x".equalsIgnoreCase(description)) {
             return;
         }
 
@@ -84,15 +88,11 @@ public class FinanceView {
     private void searchTransactions() {
         System.out.println("[Cari Transaksi]");
         String keyword = InputUtil.input("Kata Kunci (x Jika Batal)");
-        if ("x".equalsIgnoreCase(keyword)) {
+        if (keyword.isBlank() || "x".equalsIgnoreCase(keyword)) {
             return;
         }
 
-        var filtered = financeUseCase.getAllTransactions().stream()
-                .filter(transaction -> transaction.getDescription().toLowerCase().contains(keyword.toLowerCase()))
-                .toList();
-
-        presenter.showSearchResult(keyword, filtered);
+        presenter.showSearchResult(keyword, financeUseCase.searchTransactions(keyword));
     }
 
     private void showSortedTransactions() {
@@ -160,5 +160,4 @@ public class FinanceView {
             default -> null;
         };
     }
-
 }

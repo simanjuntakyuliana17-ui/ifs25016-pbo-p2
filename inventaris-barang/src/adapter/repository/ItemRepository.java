@@ -24,7 +24,7 @@ public class ItemRepository implements IItemRepository {
     }
 
     @Override
-    public Item save(String name, String quantity, String category) {
+    public Item save(String name, int quantity, String category) {
         Item item = new Item(nextId(), name, quantity, category);
         data.add(item);
         return item;

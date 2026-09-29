@@ -1,6 +1,7 @@
 package framework.view;
 
 import adapter.presenter.ItemPresenter;
+import domain.entity.Item;
 import domain.entity.SortOption;
 import framework.util.InputUtil;
 import usecase.ItemUseCase;
@@ -61,19 +62,21 @@ public class ItemView {
             return;
         }
 
-        if (!name.equals("x")) {
-            String quantity = InputUtil.input("Jumlah");
-            if (!isValidQuantity(quantity)) {
-                presenter.showInvalidQuantity();
-                return;
-            }
+        Integer quantity = parseQuantity(InputUtil.input("Jumlah"));
+        if (quantity == null) {
+            return;
+        }
 
-            String category = InputUtil.input("Kategori (x Jika Batal)");
-            if (category.equals("x")) {
-                return;
-            }
+        String category = InputUtil.input("Kategori (x Jika Batal)");
+        if (category.isBlank() || category.equals("x")) {
+            return;
+        }
 
-            presenter.showAddSuccess(itemUseCase.addItem(name, quantity, category));
+        Item item = itemUseCase.addItem(name, quantity, category);
+        if (item != null) {
+            presenter.showAddSuccess(item);
+        } else {
+            presenter.showInvalidQuantity();
         }
     }
 
@@ -113,12 +116,13 @@ public class ItemView {
         }
 
         String newQuantity = InputUtil.input("Jumlah Baru (Kosongkan jika tidak ingin mengubah)");
-        if (!newQuantity.isBlank() && !isValidQuantity(newQuantity)) {
-            presenter.showInvalidQuantity();
-            return;
+        Integer quantity = null;
+        if (!newQuantity.isBlank()) {
+            quantity = parseQuantity(newQuantity);
+            if (quantity == null) {
+                return;
+            }
         }
-
-        String quantity = newQuantity.isBlank() ? null : newQuantity;
 
         if (itemUseCase.updateItem(id, null, quantity, null)) {
             presenter.showUpdateSuccess();
@@ -176,16 +180,23 @@ public class ItemView {
         }
     }
 
-    private boolean isValidQuantity(String value) {
-        if (value == null || value.isBlank()) {
-            return false;
+    /**
+     * Mengonversi input string menjadi jumlah stok (harus bilangan bulat &gt; 0).
+     *
+     * @return jumlah jika valid, null jika tidak valid (error sudah ditampilkan)
+     */
+    private Integer parseQuantity(String value) {
+        try {
+            int quantity = Integer.parseInt(value.trim());
+            if (quantity > 0) {
+                return quantity;
+            }
+        } catch (NumberFormatException e) {
+            // jatuh ke pesan error di bawah
         }
 
-        try {
-            return Integer.parseInt(value) > 0;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+        presenter.showInvalidQuantity();
+        return null;
     }
 
     /** Memetakan pilihan menu (1-2) ke {@link SortOption} domain. */

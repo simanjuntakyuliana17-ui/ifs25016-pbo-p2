@@ -7,7 +7,7 @@ public class ItemPresenter {
 
     private String format(Item item) {
         // <id> | <nama> | <quantity> | <category>
-        return String.format("%d | %s | %s | %s", item.getId(), item.getName(), item.getQuantity(), item.getCategory());
+        return String.format("%d | %s | %d | %s", item.getId(), item.getName(), item.getQuantity(), item.getCategory());
     }
 
     private void printList(List<Item> items, String header, String emptyMessage) {
@@ -69,9 +69,5 @@ public class ItemPresenter {
 
     public void showInvalidSortOption() {
         System.out.println("[!] Pilihan tidak valid!");
-    }
-
-    public void showInvalidFinishedStatus() {
-        System.out.println("[!] Pilihan status selesai tidak valid (gunakan y/n)!");
     }
 }

@@ -13,7 +13,7 @@ public class ActivityUseCase {
         this.activityRepository = activityRepository;
     }
 
-    public List<Activity> getAllActivitys() {
+    public List<Activity> getAllActivities() {
         return activityRepository.findAll();
     }
 
@@ -48,14 +48,14 @@ public class ActivityUseCase {
         return true;
     }
 
-    public List<Activity> searchActivitys(String keyword) {
+    public List<Activity> searchActivities(String keyword) {
         String lowerKeyword = keyword.toLowerCase();
         return activityRepository.findAll().stream()
                 .filter(activity -> activity.getTitle().toLowerCase().contains(lowerKeyword))
                 .toList();
     }
 
-    public List<Activity> sortActivitys(SortOption option) {
+    public List<Activity> sortActivities(SortOption option) {
         return activityRepository.findAll().stream()
                 .sorted(option.comparator())
                 .toList();

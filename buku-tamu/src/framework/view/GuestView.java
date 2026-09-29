@@ -22,6 +22,10 @@ public class GuestView {
             printMenu();
 
             String input = InputUtil.input("Pilih");
+            if (input.isBlank()) {
+                break;
+            }
+
             switch (input) {
                 case "1" -> addGuest();
                 case "2" -> searchGuest();
@@ -49,13 +53,16 @@ public class GuestView {
         System.out.println("[Mendaftarkan Tamu]");
         String name = InputUtil.input("Nama (x Jika Batal)");
 
-        if (!name.equals("x")) {
-            String purpose = InputUtil.input("Tujuan Kunjungan (x Jika Batal)");
-
-            if (!purpose.equals("x")) {
-                presenter.showAddSuccess(guestUseCase.addGuest(name, purpose));
-            }
+        if (name.isBlank() || name.equals("x")) {
+            return;
         }
+
+        String purpose = InputUtil.input("Tujuan Kunjungan (x Jika Batal)");
+        if (purpose.isBlank() || purpose.equals("x")) {
+            return;
+        }
+
+        presenter.showAddSuccess(guestUseCase.addGuest(name, purpose));
     }
 
     /** Form hapus guest berdasarkan ID. */
@@ -63,7 +70,7 @@ public class GuestView {
         System.out.println("[Menghapus Tamu]");
         String strIdGuest = InputUtil.input("[ID Tamu] yang dihapus (x Jika Batal)");
 
-        if (strIdGuest.equals("x")) {
+        if (strIdGuest.isBlank() || strIdGuest.equals("x")) {
             return;
         }
 
@@ -84,7 +91,7 @@ public class GuestView {
         System.out.println("[Mencari Tamu]");
         String keyword = InputUtil.input("Nama (x Jika Batal)");
 
-        if (!keyword.equals("x")) {
+        if (!keyword.isBlank() && !keyword.equals("x")) {
             presenter.showSearchResults(guestUseCase.searchGuests(keyword), keyword);
         }
     }

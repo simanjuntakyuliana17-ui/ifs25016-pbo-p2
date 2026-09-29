@@ -1,6 +1,5 @@
 package usecase;
 
-import adapter.repository.TransactionRepository;
 import domain.entity.SortOption;
 import domain.entity.Transaction;
 import domain.entity.TransactionType;
@@ -10,10 +9,6 @@ import java.util.List;
 
 public class FinanceUseCase {
     private final ITransactionRepository transactionRepository;
-
-    public FinanceUseCase() {
-        this(new TransactionRepository());
-    }
 
     public FinanceUseCase(ITransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
@@ -41,6 +36,13 @@ public class FinanceUseCase {
 
     public List<Transaction> getAllTransactions() {
         return transactionRepository.findAll();
+    }
+
+    public List<Transaction> searchTransactions(String keyword) {
+        String lowerKeyword = keyword.toLowerCase();
+        return transactionRepository.findAll().stream()
+                .filter(transaction -> transaction.getDescription().toLowerCase().contains(lowerKeyword))
+                .toList();
     }
 
     public boolean deleteTransaction(int id) {

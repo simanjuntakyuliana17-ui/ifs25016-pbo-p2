@@ -1,14 +1,14 @@
 package domain.entity;
 
-// id, name, phone, category
+// id, name, quantity, category
 public class Item {
     private final int id;
 
     private String name;
-    private String quantity;
+    private int quantity;
     private String category;
 
-    public Item(int id, String name, String quantity, String category) {
+    public Item(int id, String name, int quantity, String category) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -27,11 +27,11 @@ public class Item {
         this.name = name;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

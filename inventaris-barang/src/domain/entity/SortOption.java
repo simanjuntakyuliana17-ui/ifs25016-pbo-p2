@@ -10,12 +10,12 @@ public enum SortOption {
     NAME_DESC(Comparator.comparing(Item::getName, String.CASE_INSENSITIVE_ORDER).reversed()),
 
     /** Urutkan quantity dari terkecil ke terbesar. */
-    QUANTITY_ASC(Comparator.comparingInt(SortOption::parseQuantity)),
+    QUANTITY_ASC(Comparator.comparingInt(Item::getQuantity)),
 
     /** Urutkan quantity dari terbesar ke terkecil. */
-    QUANTITY_DESC(Comparator.comparingInt(SortOption::parseQuantity).reversed());
+    QUANTITY_DESC(Comparator.comparingInt(Item::getQuantity).reversed());
 
-    /** Comparator yang digunakan untuk mengurutkan daftar todo. */
+    /** Comparator yang digunakan untuk mengurutkan daftar barang. */
     private final Comparator<Item> comparator;
 
     SortOption(Comparator<Item> comparator) {
@@ -25,13 +25,5 @@ public enum SortOption {
     /** Mengembalikan comparator yang sesuai dengan opsi ini. */
     public Comparator<Item> comparator() {
         return comparator;
-    }
-
-    private static int parseQuantity(Item item) {
-        try {
-            return Integer.parseInt(item.getQuantity());
-        } catch (NumberFormatException e) {
-            return Integer.MAX_VALUE;
-        }
     }
 }

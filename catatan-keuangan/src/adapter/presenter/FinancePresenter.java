@@ -1,6 +1,7 @@
 package adapter.presenter;
 
 import domain.entity.Transaction;
+import domain.entity.TransactionType;
 import java.util.List;
 
 public class FinancePresenter {
@@ -48,10 +49,6 @@ public class FinancePresenter {
         System.out.println("[!] Pilihan tidak valid!");
     }
 
-    public void showSearchNotAvailable() {
-        System.out.println("[Cari Transaksi]");
-    }
-
     public void showDeleteTransaction() {
         System.out.println("[Hapus Transaksi]");
     }
@@ -78,7 +75,7 @@ public class FinancePresenter {
         }
     }
 
-    private String formatType(domain.entity.TransactionType type) {
-        return type == domain.entity.TransactionType.INCOME ? "Pemasukan" : "Pengeluaran";
+    private String formatType(TransactionType type) {
+        return type == TransactionType.INCOME ? "Pemasukan" : "Pengeluaran";
     }
 }

@@ -6,11 +6,11 @@ import java.time.format.DateTimeParseException;
 
 public enum SortOption {
     /** Urutkan hari dari Senin -> Minggu. */
-            DAY_ASC(Comparator.comparingInt((Activity a) -> dayOrder(a.getDay()))
-                .thenComparing((Activity a) -> parseTime(a.getTime()))),
+    DAY_ASC(Comparator.comparingInt((Activity a) -> dayOrder(a.getDay()))
+            .thenComparing((Activity a) -> parseTime(a.getTime()))),
 
-        /** Urutkan waktu dari awal -> akhir (misal 06:00, 09:00). */
-        TIME_ASC(Comparator.comparing((Activity a) -> parseTime(a.getTime()))),
+    /** Urutkan waktu dari awal -> akhir (misal 06:00, 09:00). */
+    TIME_ASC(Comparator.comparing((Activity a) -> parseTime(a.getTime()))),
 
     /** Urutkan judul dari A ke Z (case-insensitive). */
     TITLE_ASC(Comparator.comparing(Activity::getTitle, String.CASE_INSENSITIVE_ORDER)),
@@ -18,7 +18,7 @@ public enum SortOption {
     /** Urutkan judul dari Z ke A (case-insensitive). */
     TITLE_DESC(Comparator.comparing(Activity::getTitle, String.CASE_INSENSITIVE_ORDER).reversed());
 
-    /** Comparator yang digunakan untuk mengurutkan daftar todo. */
+    /** Comparator yang digunakan untuk mengurutkan daftar kegiatan. */
     private final Comparator<Activity> comparator;
 
     SortOption(Comparator<Activity> comparator) {

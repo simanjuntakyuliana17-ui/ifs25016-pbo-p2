@@ -9,9 +9,9 @@ public interface IItemRepository {
 
     Optional<Item> findById(int id);
 
-    Item save(String name, String quantity, String category);
+    Item save(String name, int quantity, String category);
 
     boolean deleteById(int id);
 
-    void update(Item contact);
+    void update(Item item);
 }

@@ -1,6 +1,6 @@
 package domain.entity;
 
-// id, name, purpose, email
+// id, name, purpose
 public class Guest {
     private final int id;
 
