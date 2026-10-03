@@ -62,12 +62,12 @@ public class ContactView {
             return;
         }
 
-        String phone = InputUtil.input("Telepon (x Jika Batal)");
+        String phone = InputUtil.input("Telepon");
         if (phone.isBlank() || phone.equals("x")) {
             return;
         }
 
-        String email = InputUtil.input("Email (x Jika Batal)");
+        String email = InputUtil.input("Email");
         if (email.isBlank() || email.equals("x")) {
             return;
         }
