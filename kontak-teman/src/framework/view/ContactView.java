@@ -23,6 +23,10 @@ public class ContactView {
             printMenu();
 
             String input = InputUtil.input("Pilih");
+            if (input.isBlank()) {
+                break;
+            }
+
             switch (input) {
                 case "1" -> addContact();
                 case "2" -> updateContact();
@@ -54,13 +58,21 @@ public class ContactView {
         System.out.println("[Menambah Kontak]");
         String name = InputUtil.input("Nama (x Jika Batal)");
 
-        if (!name.equals("x")) {
-
-            String phone = InputUtil.input("Telepon");
-            String email = InputUtil.input("Email");
-
-            presenter.showAddSuccess(contactUseCase.addContact(name, phone, email));
+        if (name.isBlank() || name.equals("x")) {
+            return;
         }
+
+        String phone = InputUtil.input("Telepon (x Jika Batal)");
+        if (phone.isBlank() || phone.equals("x")) {
+            return;
+        }
+
+        String email = InputUtil.input("Email (x Jika Batal)");
+        if (email.isBlank() || email.equals("x")) {
+            return;
+        }
+
+        presenter.showAddSuccess(contactUseCase.addContact(name, phone, email));
     }
 
     /** Form hapus contact berdasarkan ID. */
@@ -68,7 +80,7 @@ public class ContactView {
         System.out.println("[Menghapus Kontak]");
         String strIdContact = InputUtil.input("[ID Kontak] yang dihapus (x Jika Batal)");
 
-        if (strIdContact.equals("x")) {
+        if (strIdContact.isBlank() || strIdContact.equals("x")) {
             return;
         }
 
@@ -89,7 +101,7 @@ public class ContactView {
         System.out.println("[Mengubah Kontak]");
         String strIdContact = InputUtil.input("ID Kontak yang diubah (x Jika Batal)");
 
-        if (strIdContact.equals("x")) {
+        if (strIdContact.isBlank() || strIdContact.equals("x")) {
             return;
         }
 
@@ -119,7 +131,7 @@ public class ContactView {
         System.out.println("[Mencari Kontak]");
         String keyword = InputUtil.input("Kata Kunci (x Jika Batal)");
 
-        if (!keyword.equals("x")) {
+        if (!keyword.isBlank() && !keyword.equals("x")) {
             presenter.showSearchResults(contactUseCase.searchContacts(keyword), keyword);
         }
     }
@@ -133,7 +145,7 @@ public class ContactView {
         System.out.println("x. Batal");
 
         String input = InputUtil.input("Pilih");
-        if (input.equals("x")) {
+        if (input.isBlank() || input.equals("x")) {
             return;
         }
 

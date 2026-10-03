@@ -13,21 +13,27 @@ public class ItemRepository implements IItemRepository {
 
     @Override
     public List<Item> findAll() {
-        return new ArrayList<>(data);
+        List<Item> copies = new ArrayList<>();
+        for (Item item : data) {
+            copies.add(copyOf(item));
+        }
+
+        return copies;
     }
 
     @Override
     public Optional<Item> findById(int id) {
         return data.stream()
                 .filter(item -> item.getId() == id)
-                .findFirst();
+                .findFirst()
+                .map(this::copyOf);
     }
 
     @Override
     public Item save(String name, int quantity, String category) {
         Item item = new Item(nextId(), name, quantity, category);
         data.add(item);
-        return item;
+        return copyOf(item);
     }
 
     @Override
@@ -37,9 +43,19 @@ public class ItemRepository implements IItemRepository {
 
     @Override
     public void update(Item item) {
-        // Entity bersifat mutable dan disimpan by-reference, sehingga perubahan
-        // pada instance sudah otomatis tercermin di penyimpanan in-memory.
-        // Method ini tetap ada agar kontrak port valid untuk implementasi lain.
+        // findById/findAll mengembalikan salinan, jadi perubahan baru tersimpan
+        // setelah objek yang tersimpan diganti dengan salinan dari parameter.
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getId() == item.getId()) {
+                data.set(i, copyOf(item));
+                return;
+            }
+        }
+    }
+
+    /** Defensive copy: entity asli tidak pernah keluar dari repository. */
+    private Item copyOf(Item item) {
+        return new Item(item.getId(), item.getName(), item.getQuantity(), item.getCategory());
     }
 
     private int nextId() {

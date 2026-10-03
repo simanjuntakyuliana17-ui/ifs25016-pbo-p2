@@ -9,7 +9,7 @@ public enum SortOption {
     /** Urutkan name dari Z ke A (case-insensitive). */
     NAME_DESC(Comparator.comparing(Contact::getName, String.CASE_INSENSITIVE_ORDER).reversed());
 
-    /** Comparator yang digunakan untuk mengurutkan daftar todo. */
+    /** Comparator yang digunakan untuk mengurutkan daftar kontak. */
     private final Comparator<Contact> comparator;
 
     SortOption(Comparator<Contact> comparator) {

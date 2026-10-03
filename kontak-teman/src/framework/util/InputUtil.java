@@ -1,5 +1,6 @@
 package framework.util;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -18,6 +19,15 @@ public class InputUtil {
      */
     public static String input(String info) {
         System.out.print(info + " : ");
-        return scanner.nextLine();
+
+        try {
+            if (!scanner.hasNextLine()) {
+                return "";
+            }
+
+            return scanner.nextLine();
+        } catch (NoSuchElementException | IllegalStateException e) {
+            return "";
+        }
     }
 }

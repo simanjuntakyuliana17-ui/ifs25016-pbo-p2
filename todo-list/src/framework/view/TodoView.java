@@ -141,7 +141,7 @@ public class TodoView {
         System.out.println("x. Batal");
 
         String input = InputUtil.input("Pilih");
-        if (input.equals("x")) {
+        if (input.isBlank() || input.equals("x")) {
             return;
         }
 

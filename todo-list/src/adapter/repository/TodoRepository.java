@@ -13,21 +13,27 @@ public class TodoRepository implements ITodoRepository {
 
     @Override
     public List<Todo> findAll() {
-        return new ArrayList<>(data);
+        List<Todo> copies = new ArrayList<>();
+        for (Todo todo : data) {
+            copies.add(copyOf(todo));
+        }
+
+        return copies;
     }
 
     @Override
     public Optional<Todo> findById(int id) {
         return data.stream()
                 .filter(todo -> todo.getId() == id)
-                .findFirst();
+                .findFirst()
+                .map(this::copyOf);
     }
 
     @Override
     public Todo save(String title) {
         Todo todo = new Todo(nextId(), title, false);
         data.add(todo);
-        return todo;
+        return copyOf(todo);
     }
 
     @Override
@@ -37,9 +43,19 @@ public class TodoRepository implements ITodoRepository {
 
     @Override
     public void update(Todo todo) {
-        // Entity bersifat mutable dan disimpan by-reference, sehingga perubahan
-        // pada instance sudah otomatis tercermin di penyimpanan in-memory.
-        // Method ini tetap ada agar kontrak port valid untuk implementasi lain.
+        // findById/findAll mengembalikan salinan, jadi perubahan baru tersimpan
+        // setelah objek yang tersimpan diganti dengan salinan dari parameter.
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getId() == todo.getId()) {
+                data.set(i, copyOf(todo));
+                return;
+            }
+        }
+    }
+
+    /** Defensive copy: entity asli tidak pernah keluar dari repository. */
+    private Todo copyOf(Todo todo) {
+        return new Todo(todo.getId(), todo.getTitle(), todo.isFinished());
     }
 
     /** Menghasilkan ID unik berikutnya. */

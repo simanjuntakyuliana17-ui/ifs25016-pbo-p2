@@ -58,17 +58,17 @@ public class ActivityView {
         System.out.println("[Menambah Kegiatan]");
         String title = InputUtil.input("Judul (x Jika Batal)");
         // Batalkan jika pengguna memilih 'x' atau tidak memasukkan judul
-        if (title.equals("x") || title.isBlank()) {
+        if (title.isBlank() || title.equals("x")) {
             return;
         }
 
         String day = InputUtil.input("Hari (x Jika Batal)");
-        if (day.equals("x") || day.isBlank()) {
+        if (day.isBlank() || day.equals("x")) {
             return;
         }
 
         String time = InputUtil.input("Waktu (x Jika Batal)");
-        if (time.equals("x") || time.isBlank()) {
+        if (time.isBlank() || time.equals("x")) {
             return;
         }
 
@@ -147,7 +147,7 @@ public class ActivityView {
         System.out.println("x. Batal");
 
         String input = InputUtil.input("Pilih");
-        if (input.equals("x")) {
+        if (input.isBlank() || input.equals("x")) {
             return;
         }
 

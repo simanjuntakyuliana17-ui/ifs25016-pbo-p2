@@ -103,11 +103,7 @@ public class FinanceView {
         System.out.println("4. Pengeluaran Dulu");
         System.out.println("x. Batal");
         String input = InputUtil.input("Pilih");
-        if (input == null || input.trim().isEmpty()) {
-            presenter.showInvalidSortOption();
-            return;
-        }
-        if ("x".equalsIgnoreCase(input)) {
+        if (input.isBlank() || "x".equalsIgnoreCase(input)) {
             return;
         }
 
@@ -123,11 +119,7 @@ public class FinanceView {
     private void deleteTransaction() {
         presenter.showDeleteTransaction();
         String input = InputUtil.input("ID Transaksi (x Jika Batal)");
-        if (input == null || input.trim().isEmpty()) {
-            presenter.showInvalidTransactionId();
-            return;
-        }
-        if ("x".equalsIgnoreCase(input)) {
+        if (input.isBlank() || "x".equalsIgnoreCase(input)) {
             return;
         }
 

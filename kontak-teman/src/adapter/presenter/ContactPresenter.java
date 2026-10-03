@@ -66,8 +66,4 @@ public class ContactPresenter {
     public void showInvalidSortOption() {
         System.out.println("[!] Pilihan tidak valid!");
     }
-
-    public void showInvalidFinishedStatus() {
-        System.out.println("[!] Pilihan status selesai tidak valid (gunakan y/n)!");
-    }
 }
